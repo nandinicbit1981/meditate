@@ -6,10 +6,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Random;
@@ -20,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends Activity {
 
     @Bind(R.id.meditateBtn)
     Button meditateBtn;
@@ -34,7 +32,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     MediaPlayer omPlayer;
     MediaPlayer waterDropPlayer;
     int waterDropFrequency = 0;
-    Spinner minutesSpinner;
+    //Spinner minutesSpinner;
+
+    @Bind(R.id.med_minutes)
+    EditText med_minutes;
 
     int minutesFromDD = 0;
     Timer dropTimer = new Timer();
@@ -56,19 +57,20 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         omPlayer.setLooping(true);
 
         waterDropPlayer = MediaPlayer.create(this, dropSoundID);
-        minutesSpinner = (Spinner) findViewById(R.id.med_minutes);
-        minutesSpinner.setOnItemSelectedListener(this);
+//        minutesSpinner = (Spinner) findViewById(R.id.med_minutes);
+//        minutesSpinner.setOnItemSelectedListener(this);
 
     }
 
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        minutesFromDD = Integer.parseInt(minutesSpinner.getSelectedItem().toString());
-    }
+//    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+//        minutesFromDD = Integer.parseInt(minutesSpinner.getSelectedItem().toString());
+//    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+//    @Override
+//    public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//    }
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,7 +138,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     public void meditateBtnClicked() {
 
             meditateBtn.setEnabled(false);
-
+            minutesFromDD = Integer.parseInt(med_minutes.getText().toString());
             MyClass newTimer = new MyClass();
             newTimer.run();
             System.out.println("***************************************************");
@@ -178,5 +180,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
             }, 0, 1000);
     }
+
+
+
+
 }
 
