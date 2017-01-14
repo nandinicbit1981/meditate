@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="20dp"
+    android:padding="40dp"
     android:shape="rectangle">
     <corners android:radius="10dp"/> <!-- increasing the value, increases the rounding. And as  TTransmit said, to make it like a capsule make the radius half of your button height -->
-    <solid android:color="#AAAAAA"/><!-- the button color -->
-    <padding android:left="5dp" android:bottom="5dp"  android:right="5dp" android:top="5dp" />
+    <solid android:color="#FF0000"/><!-- the button color -->
+    <padding android:left="15dp" android:bottom="15dp"  android:right="15dp" android:top="15dp" />
     <size  android:width="250px"/>
 </shape>

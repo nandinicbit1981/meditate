@@ -29,7 +29,7 @@
                 android:text="Meditate"
                 android:textColor="@color/colorHeading"
                 android:textStyle="bold"
-                android:textSize="50px"
+                android:textSize="100px"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -37,7 +37,7 @@
 
         <LinearLayout
             android:paddingLeft="150px"
-            android:layout_margin="100px"
+            android:layout_margin="120px"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -50,15 +50,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorHeading"
+                android:text="meditation minutes:"
+                />
 
             <Spinner
                 android:id="@+id/med_minutes"
-                android:layout_width="95dp"
-                android:layout_height="wrap_content"
+                android:layout_width="148dp"
+                android:popupBackground="#CD7054"
+                android:layout_height="48dp"
                 android:entries="@array/minute_arrays"
                 android:prompt="@string/select_minutes"
                 android:layout_marginTop="10dp" />
 
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:paddingLeft="150px"
+            android:layout_margin="120px"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         </LinearLayout>
 
         <LinearLayout
@@ -75,22 +91,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/minutes"
-                    android:inputType="number"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=":"
-                    /> :
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/seconds"
-                    android:inputType="number"
-                    />
-
+                    android:id="@+id/countdown"
+                    android:inputType="number" />
             </LinearLayout>
 
         </LinearLayout>
@@ -101,19 +103,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="0.04">
 
             <Button
                 android:background="@drawable/oval_button_small"
                 android:layout_width="wrap_content"
                 android:id="@+id/meditateBtn"
                 android:text="Start"
+                android:layout_marginRight="10px"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:background="@drawable/oval_button_small_red"
+                android:layout_width="wrap_content"
+                android:id="@+id/stopBtn"
+                android:text="Stop"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp" />
+                android:layout_marginLeft="15px" />
+
         </LinearLayout>
     </LinearLayout>
 

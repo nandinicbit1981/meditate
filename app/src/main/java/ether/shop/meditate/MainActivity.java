@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,14 +22,14 @@ import butterknife.OnClick;
 
 public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
+    @Bind(R.id.meditateBtn)
+    Button meditateBtn;
+
     public int seconds = 60;
     public int minutes = 10;
 
-    @Bind(R.id.minutes)
-    TextView minutesText;
-
-    @Bind(R.id.seconds)
-    TextView secondsText;
+    @Bind(R.id.countdown)
+    TextView countdownText;
 
     MediaPlayer omPlayer;
     MediaPlayer waterDropPlayer;
@@ -37,6 +38,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
 
     int minutesFromDD = 0;
     Timer dropTimer = new Timer();
+    //Declare the timer
+    final Timer omTimer = new Timer();
+
+    boolean firstTick = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
     }
 
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        minutes = Integer.parseInt(parent.getItemAtPosition(position).toString());
+        minutesFromDD = Integer.parseInt(minutesSpinner.getSelectedItem().toString());
     }
 
     @Override
@@ -111,20 +116,34 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         }
     }
 
+    @OnClick(R.id.stopBtn)
+    public void stopTimer(){
+        omPlayer.stop();
+        waterDropPlayer.stop();
+        omTimer.cancel();
+        omTimer.purge();
+        dropTimer.cancel();
+        dropTimer.purge();
+        Intent intent = new Intent(MainActivity.this, DropCountActivity.class);
+        Bundle sendBundle = new Bundle();
+        sendBundle.putLong("drops", waterDropFrequency);
+        intent.putExtras(sendBundle);
+        startActivity(intent);
+        finish();
+    }
 
     @OnClick(R.id.meditateBtn)
     public void meditateBtnClicked() {
+
+            meditateBtn.setEnabled(false);
+
             MyClass newTimer = new MyClass();
             newTimer.run();
             System.out.println("***************************************************");
-            //Declare the timer
-            final Timer t = new Timer();
-//            if(minutesText != null && secondsText != null) {
-//                seconds = Integer.parseInt(secondsText.getText().toString());
-//                minutes = Integer.parseInt(minutesText.getText().toString());
-//            }
+
+
             //Set the schedule function and rate
-            t.scheduleAtFixedRate(new TimerTask() {
+            omTimer.scheduleAtFixedRate(new TimerTask() {
 
                 @Override
                 public void run() {
@@ -133,7 +152,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
                         @Override
                         public void run() {
 
-                            secondsText.setText(String.valueOf(seconds));
+                            if(firstTick && minutesFromDD > 0) {
+                                minutesFromDD = minutesFromDD - 1;
+                                firstTick = false;
+                            }
+                            countdownText.setText(String.valueOf(minutesFromDD) + " : " + seconds);
                             if(!omPlayer.isPlaying()) {
                                 omPlayer.start();
                             }
@@ -142,23 +165,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
                             } else
                             {
                                 seconds=60;
-                                if(minutesFromDD > 0) {
-                                    minutesFromDD = minutesFromDD - 1;
-                                    minutesText.setText(String.valueOf(minutesFromDD));
-                                } else {
-                                    omPlayer.stop();
-                                    waterDropPlayer.stop();
-                                    t.cancel();
-                                    t.purge();
-                                    dropTimer.cancel();
-                                    dropTimer.purge();
-                                    Intent intent = new Intent(MainActivity.this, DropCountActivity.class);
-                                    Bundle sendBundle = new Bundle();
-                                    sendBundle.putLong("drops", waterDropFrequency);
-                                    intent.putExtras(sendBundle);
-
-                                    startActivity(intent);
-                                    finish();
+                                minutesFromDD = minutesFromDD - 1;
+                                if(minutesFromDD == 0) {
+                                  stopTimer();
                                 }
                             }
 

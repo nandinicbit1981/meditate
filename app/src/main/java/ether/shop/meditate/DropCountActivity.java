@@ -40,6 +40,8 @@ public class DropCountActivity extends AppCompatActivity {
         final int dropCountByUser = Integer.parseInt(dropCount.getText().toString());
         final int actualDropCount = Integer.parseInt(getIntent().getExtras().get("drops").toString());
 
+            dropCountButton.setEnabled(false);
+            dropCount.setEnabled(false);
 
             runOnUiThread(new Runnable() {
                 @Override
